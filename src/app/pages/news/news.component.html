@@ -1,0 +1,61 @@
+<div class="mt-2 mx-5">
+  <h3>Formulario Noticia:</h3>
+  <form [formGroup]="formRegistro" class="border p-4 rounded" (ngSubmit)="create()">
+      <div class="mb-3">
+          <label for="titulo" class="form-label">Titulo:</label>
+          <input formControlName="titulo" type="text" class="form-control" placeholder="Titulo..">
+      </div>
+      <div class="mb-3">
+          <label for="descripcion" class="form-label">Descripcion:</label>
+          <input formControlName="descripcion" type="text" class="form-control" placeholder="Descripcion..">
+      </div>
+      <div class="mb-3">
+          <label for="foto" class="form-label">Editorial:</label>
+          <input formControlName="foto" type="text" class="form-control" placeholder="Editorial..">
+      </div>
+      <div class="text-end">
+          <button type="button" class="btn btn-light me-2">Cancelar</button>
+          <button type="submit" class="btn btn-primary">{{btnDescripcion}} Noticia</button>
+      </div>
+  </form>
+
+  @if (!staticAlertClosed) {
+      <ngb-alert (closed)="staticAlertClosed = true">Check out our awesome new features!</ngb-alert>
+  }
+  @if (successMessage) {
+      <ngb-alert [type]="colorMessage" (closed)="successMessage = ''">{{ successMessage }}</ngb-alert>
+  }
+  <h3 class="mt-2">Listado Noticias:</h3>
+  <table class="table table-striped mt-4">
+      <thead class="table-dark">
+          <tr>
+              <th>ID</th>
+              <th>Titulo</th>
+              <th>Descripcion</th>
+              <th>Editorial</th>
+              <th>Modificar</th>
+              <th>Eliminar</th>
+          </tr>
+      </thead>
+      <tbody>
+          @for (noticia of noticias; track noticia.id) {
+              <tr>
+                  <td>{{ noticia?.id }}</td>
+                  <td>{{ noticia?.titulo }}</td>
+                  <td>{{ noticia?.descripcion }}</td>
+                  <td>{{ noticia?.foto }}</td>
+                  <td>
+                      <button class="btn btn-warning btn-sm" (click)="seleccionar(noticia?.id)">
+                          <i class="bi bi-pencil"></i> Modificar
+                      </button>
+                  </td>
+                  <td>
+                      <button class="btn btn-danger btn-sm" (click)="eliminar(noticia?.id)">
+                          <i class="bi bi-trash"></i> Eliminar
+                      </button>
+                  </td>
+              </tr>
+          }
+      </tbody>
+  </table>
+</div>
